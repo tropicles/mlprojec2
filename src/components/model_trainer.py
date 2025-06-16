@@ -12,8 +12,6 @@ from sklearn.svm import SVR
 from sklearn.linear_model import LinearRegression, Ridge,Lasso
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from sklearn.model_selection import RandomizedSearchCV
-from catboost import CatBoostRegressor
-from xgboost import XGBRegressor
 import warnings
 import os
 import sys
@@ -47,8 +45,6 @@ class ModelTrainer:
                     "K-Neighbors Regressor": KNeighborsRegressor(),
                     "Decision Tree": DecisionTreeRegressor(),
                     "Random Forest Regressor": RandomForestRegressor(),
-                    "XGBRegressor": XGBRegressor(), 
-                    "CatBoosting Regressor": CatBoostRegressor(verbose=False),
                     "AdaBoost Regressor": AdaBoostRegressor()
                 }
             model_report:dict=evaluate_model(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,models=models)
