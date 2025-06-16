@@ -86,10 +86,15 @@ jobs:
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
 
+      - name: Cleanup disk space
+        run: |
+          # Remove unused containers, images, volumes, and builder cache
+          docker rm -f $CONTAINER_NAME || true
+          docker system prune -af --volumes
+          docker builder prune -af
+
       - name: Pull latest image
         run: |
-          # Remove old container if present (ignore errors)
-          docker rm -f $CONTAINER_NAME || true
           docker pull $ECR_LOGIN_URI/$ECR_REPOSITORY:$IMAGE_TAG
 
       - name: Run Docker container
@@ -104,6 +109,6 @@ jobs:
             -e AWS_REGION=${{ secrets.AWS_REGION }} \
             $ECR_LOGIN_URI/$ECR_REPOSITORY:$IMAGE_TAG
 
-      - name: Clean up dangling resources
+      - name: Final Docker cleanup
         run: |
           docker system prune -f
