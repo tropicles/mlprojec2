@@ -6,3 +6,4 @@ scikit-learn
 dill
 flask
 #-e .
+#539247466685.dkr.ecr.us-east-1.amazonaws.com/mlpro1
